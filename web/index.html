@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JG Elevator</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- ==========================================
+         ADMIN PANEL - CREADOR DE ASCENSORES
+         ========================================== -->
+        <div id="adminPanel" class="admin-panel hidden">
+            <div class="admin-container">
+                <!-- Header -->
+                <div class="admin-header">
+                    <div class="admin-header-left">
+                        <div class="admin-icon">
+                            <span class="material-symbols-rounded">elevator</span>
+                        </div>
+                        <div class="admin-title-group">
+                            <h1 class="admin-title">Elevator Creator</h1>
+                            <span class="admin-subtitle">Panel de Administración</span>
+                        </div>
+                    </div>
+                    <button class="admin-close-btn" id="adminCloseBtn">
+                        <span class="material-symbols-rounded">close</span>
+                    </button>
+                </div>
+
+                <!-- Body -->
+                <div class="admin-body">
+                    <!-- Sidebar - Lista de ascensores -->
+                    <div class="admin-sidebar">
+                        <div class="sidebar-header">
+                            <h3 class="sidebar-title">Ascensores</h3>
+                            <button class="btn-create-elevator" id="btnCreateElevator">
+                                <span class="material-symbols-rounded">add</span>
+                                Nuevo
+                            </button>
+                        </div>
+                        <div class="elevator-list" id="elevatorList">
+                            <!-- Se llena dinámicamente -->
+                            <div class="empty-state" id="emptyState">
+                                <span class="material-symbols-rounded">elevator</span>
+                                <p>No hay ascensores creados</p>
+                                <small>Crea uno para empezar</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content - Detalle del ascensor -->
+                    <div class="admin-content" id="adminContent">
+                        <!-- Estado vacío -->
+                        <div class="content-empty" id="contentEmpty">
+                            <span class="material-symbols-rounded">touch_app</span>
+                            <p>Selecciona un ascensor</p>
+                            <small>O crea uno nuevo para empezar</small>
+                        </div>
+
+                        <!-- Detalle del ascensor -->
+                        <div class="content-detail hidden" id="contentDetail">
+                            <!-- Header del ascensor -->
+                            <div class="detail-header">
+                                <div class="detail-header-info">
+                                    <input type="text" class="detail-name-input" id="detailName" value=""
+                                        placeholder="Nombre del ascensor">
+                                    <span class="detail-id" id="detailId">ID: --</span>
+                                </div>
+                                <div class="detail-header-actions">
+                                    <button class="btn-icon-action btn-save" id="btnSaveElevator"
+                                        title="Guardar nombre">
+                                        <span class="material-symbols-rounded">save</span>
+                                    </button>
+                                    <button class="btn-icon-action btn-delete" id="btnDeleteElevator"
+                                        title="Eliminar ascensor">
+                                        <span class="material-symbols-rounded">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Interaction Settings -->
+                            <div class="interaction-section">
+                                <div class="interaction-header">
+                                    <span class="interaction-label">
+                                        <span class="material-symbols-rounded">touch_app</span>
+                                        Interacción
+                                    </span>
+                                </div>
+                                <div class="interaction-body">
+                                    <div class="interact-type-toggle">
+                                        <button class="toggle-btn active" id="btnTypeMarker" data-type="marker">
+                                            <span class="material-symbols-rounded">location_on</span>
+                                            Marker
+                                        </button>
+                                        <button class="toggle-btn" id="btnTypeTarget" data-type="ox_target">
+                                            <span class="material-symbols-rounded">ads_click</span>
+                                            ox_target
+                                        </button>
+                                    </div>
+                                    <div class="marker-config-section" id="markerConfigSection">
+                                        <div class="marker-type-section">
+                                            <div class="marker-type-custom">
+                                                <span class="color-label">Tipo de Marker</span>
+                                                <input type="number" class="marker-type-input" id="markerTypeInput"
+                                                    value="20" min="0" max="43">
+                                            </div>
+                                        </div>
+                                        <div class="marker-color-section" id="markerColorSection">
+                                            <span class="color-label">Color del Marker</span>
+                                            <div class="color-compact-row">
+                                                <input type="color" class="color-picker-compact" id="markerColorPicker"
+                                                    value="#6464ff">
+                                                <span class="compact-alpha-label">Opacidad</span>
+                                                <input type="range" class="compact-alpha-slider" id="sliderA" min="0"
+                                                    max="255" value="100">
+                                                <span class="compact-alpha-val" id="valA">100</span>
+                                            </div>
+                                            <input type="hidden" id="markerColorInput" value="100,100,255,100">
+                                        </div>
+                                    </div>
+                                    <button class="btn-save-interaction" id="btnSaveInteraction">
+                                        <span class="material-symbols-rounded">save</span>
+                                        Guardar Configuración
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Plantas -->
+                            <div class="floors-section">
+                                <div class="floors-header">
+                                    <h3>Plantas</h3>
+                                    <button class="btn-add-floor" id="btnAddFloor">
+                                        <span class="material-symbols-rounded">add_circle</span>
+                                        Añadir Planta
+                                    </button>
+                                </div>
+                                <div class="floors-list" id="floorsList">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de nueva planta -->
+                        <div class="content-form hidden" id="contentForm">
+                            <div class="form-header">
+                                <button class="btn-back" id="btnBackFromForm">
+                                    <span class="material-symbols-rounded">arrow_back</span>
+                                </button>
+                                <h3 id="formTitle">Nueva Planta</h3>
+                            </div>
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label>Nombre de la Planta</label>
+                                    <input type="text" id="floorLabel" placeholder="Ej: Planta Baja, Azotea, Sótano...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Índice de Planta</label>
+                                    <input type="number" id="floorIndex" value="0"
+                                        placeholder="0 = PB, -1 = Sótano, 1+ = Pisos">
+                                    <small class="form-hint">0 = Planta Baja, negativos = Sótanos, positivos = Pisos
+                                        superiores</small>
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group">
+                                    <label>Restricción por Trabajo (Job)</label>
+                                    <input type="text" id="floorJob" placeholder="Dejar vacío = sin restricción">
+                                    <small class="form-hint">Ej: police, ambulance (separar por comas)</small>
+                                </div>
+                                <div class="form-group">
+                                    <label>Grado Mínimo</label>
+                                    <input type="number" id="floorGrade" value="0" min="0" max="100">
+                                </div>
+                                <div class="form-divider"></div>
+                                <div class="form-group">
+                                    <label>Coordenadas</label>
+                                    <div class="coords-row">
+                                        <div class="coord-input">
+                                            <span>X</span>
+                                            <input type="number" id="floorX" step="0.01" value="0">
+                                        </div>
+                                        <div class="coord-input">
+                                            <span>Y</span>
+                                            <input type="number" id="floorY" step="0.01" value="0">
+                                        </div>
+                                        <div class="coord-input">
+                                            <span>Z</span>
+                                            <input type="number" id="floorZ" step="0.01" value="0">
+                                        </div>
+                                        <div class="coord-input">
+                                            <span>H</span>
+                                            <input type="number" id="floorHeading" step="0.01" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="position-buttons-row">
+                                        <button class="btn-use-position" id="btnUsePosition">
+                                            <span class="material-symbols-rounded">my_location</span>
+                                            Mi posición
+                                        </button>
+                                        <button class="btn-go-position" id="btnGoPosition">
+                                            <span class="material-symbols-rounded">directions_walk</span>
+                                            Elegir posición
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button class="btn-cancel" id="btnCancelForm">Cancelar</button>
+                                    <button class="btn-submit" id="btnSubmitForm">
+                                        <span class="material-symbols-rounded">check</span>
+                                        Guardar Planta
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diálogo de crear ascensor -->
+            <div id="createDialog" class="dialog-overlay hidden">
+                <div class="dialog-box">
+                    <div class="dialog-header">
+                        <span class="material-symbols-rounded">add_circle</span>
+                        <h3>Nuevo Ascensor</h3>
+                    </div>
+                    <div class="dialog-body">
+                        <div class="form-group">
+                            <label>Nombre del Ascensor</label>
+                            <input type="text" id="newElevatorName" placeholder="Ej: Hospital Central, Comisaría...">
+                        </div>
+                    </div>
+                    <div class="dialog-footer">
+                        <button class="btn-cancel" id="btnCancelCreate">Cancelar</button>
+                        <button class="btn-submit" id="btnConfirmCreate">
+                            <span class="material-symbols-rounded">check</span>
+                            Crear
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Diálogo de confirmación -->
+            <div id="confirmDialog" class="dialog-overlay hidden">
+                <div class="dialog-box dialog-danger">
+                    <div class="dialog-header">
+                        <span class="material-symbols-rounded">warning</span>
+                        <h3 id="confirmTitle">¿Estás seguro?</h3>
+                    </div>
+                    <div class="dialog-body">
+                        <p id="confirmMessage">Esta acción no se puede deshacer.</p>
+                    </div>
+                    <div class="dialog-footer">
+                        <button class="btn-cancel" id="btnCancelConfirm">Cancelar</button>
+                        <button class="btn-submit btn-danger" id="btnConfirmAction">
+                            <span class="material-symbols-rounded">delete</span>
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Positioning Mode Bar (custom TextUI) -->
+        <div id="positioningBar" class="positioning-bar hidden">
+            <div class="positioning-bar-inner">
+                <div class="positioning-pulse"></div>
+                <span class="material-symbols-rounded positioning-icon">location_on</span>
+                <div class="positioning-info">
+                    <span class="positioning-title">Modo Posicionamiento</span>
+                    <span class="positioning-subtitle">Muévete a la posición deseada</span>
+                </div>
+                <div class="positioning-coords" id="positioningCoords">
+                    <span id="posCoordX">X: 0.00</span>
+                    <span id="posCoordY">Y: 0.00</span>
+                    <span id="posCoordZ">Z: 0.00</span>
+                </div>
+                <div class="positioning-keys">
+                    <kbd class="key-confirm">E</kbd>
+                    <span>Confirmar</span>
+                    <kbd class="key-cancel">⌫</kbd>
+                    <span>Cancelar</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+
+        <!-- ==========================================
+         PANEL DE BOTONERA (JUGADOR)
+         ========================================== -->
+        <div id="elevator-panel" class="elevator-panel hidden">
+            <div class="elevator-display">
+                <div class="display-frame">
+                    <div class="display-screen">
+                        <div class="display-arrows">
+                            <span class="arrow arrow-up" id="arrowUp">▲</span>
+                            <span class="arrow arrow-down" id="arrowDown">▼</span>
+                        </div>
+                        <div class="display-info">
+                            <span class="display-floor" id="displayFloor">--</span>
+                            <span class="display-name" id="displayName">ASCENSOR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-panel">
+                <div class="panel-frame">
+                    <div id="floorButtons" class="floor-buttons"></div>
+                    <div class="control-buttons">
+                        <button class="control-btn btn-emergency" id="btnEmergency" title="Cerrar">
+                            <span class="btn-icon">✕</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+                <div class="status-dot"></div>
+                <span class="status-text">EN SERVICIO</span>
+            </div>
+        </div>
+
+        <!-- Overlay de puertas -->
+        <div id="doorOverlay" class="door-overlay hidden">
+            <!-- Elevator interior background -->
+            <div class="elevator-interior">
+                <!-- Moving lines effect -->
+                <div class="shaft-lines" id="shaftLines"></div>
+                <!-- Ceiling light -->
+                <div class="ceiling-glow"></div>
+            </div>
+            <!-- Doors -->
+            <div class="door door-left" id="doorLeft">
+                <div class="door-surface"></div>
+                <div class="door-handle-left"></div>
+            </div>
+            <div class="door door-right" id="doorRight">
+                <div class="door-surface"></div>
+                <div class="door-handle-right"></div>
+            </div>
+            <div class="door-seam"></div>
+            <!-- Top LED Panel -->
+            <div class="elevator-top-panel" id="insideDisplay">
+                <div class="top-panel-inner">
+                    <span class="top-panel-arrow" id="insideArrow">▲</span>
+                    <span class="top-panel-floor" id="insideFloor">--</span>
+                </div>
+                <div class="top-panel-label" id="insideLabel">ASCENSOR</div>
+            </div>
+        </div>
+
+        <!-- Overlay de acceso denegado -->
+        <div id="deniedOverlay" class="denied-overlay hidden">
+            <div class="denied-content">
+                <div class="denied-icon">🔒</div>
+                <div class="denied-text">ACCESO DENEGADO</div>
+                <div class="denied-sub" id="deniedMessage">No tienes permisos para esta planta</div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+
+</html>
