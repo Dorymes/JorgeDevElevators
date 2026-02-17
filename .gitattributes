@@ -1,0 +1,22 @@
+# Configuración para archivos Escrow (Encriptados)
+# Esto le dice a Git que trate ciertos archivos como binarios (sin intentar modificar saltos de línea)
+
+# Por defecto, detectar automáticamente
+* text=auto
+
+# Archivos del Servidor (Serán Escrow/Encriptados)
+server/*.lua binary
+server/**/*.lua binary
+
+# Archivos del Cliente (Abiertos/Open Source)
+client/*.lua text
+client/**/*.lua text
+
+# Archivos de Configuración (Deben ser legibles para que el usuario configure)
+config.lua text
+
+# Manifest (IMPORTANTE: Debe ser texto para que el version checker funcione)
+fxmanifest.lua text
+
+# Archivos Web (HTML/JS/CSS suelen ser texto)
+web/**/* text
