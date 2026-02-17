@@ -1,7 +1,7 @@
 Config = {}
 
 -- Repositorio de GitHub para verificar actualizaciones
-Config.GithubRepo = 'JorgeDev/JorgeDevElevators' -- Cambiar por 'tu-usuario/nombre-repo'
+Config.GithubRepo = 'Dorymes/JorgeDevElevators'
 
 -- Comando para abrir el panel de admin
 Config.AdminCommand = 'elevatorcreator'
