@@ -1,5 +1,26 @@
 local currentVersion = GetResourceMetadata(GetCurrentResourceName(), 'version', 0)
 
+local function parseVersion(ver)
+    local parts = {}
+    for part in string.gmatch(ver, "%d+") do
+        table.insert(parts, tonumber(part))
+    end
+    return parts
+end
+
+local function isNewer(remote, localVer)
+    local rParts = parseVersion(remote)
+    local lParts = parseVersion(localVer)
+    
+    for i = 1, math.max(#rParts, #lParts) do
+        local r = rParts[i] or 0
+        local l = lParts[i] or 0
+        if r > l then return true end
+        if r < l then return false end
+    end
+    return false
+end
+
 CreateThread(function()
     if not Config.GithubRepo or Config.GithubRepo == 'USER/REPO' then 
         print('^3[JorgeDevElevators] Update Checker: GitHub repository not configured properly in config.lua!^0')
@@ -11,7 +32,7 @@ CreateThread(function()
             local versionPattern = "version '([%d%.]+)'"
             local remoteVersion = string.match(text, versionPattern)
             
-            if remoteVersion and remoteVersion > currentVersion then
+            if remoteVersion and isNewer(remoteVersion, currentVersion) then
                 print('^3----------------------------------------------------------------------^0')
                 print('^3[JorgeDevElevators] Update Available! ^0')
                 print('^3Current Version: ' .. currentVersion .. '^0')
